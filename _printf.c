@@ -13,7 +13,8 @@ int _printf(const char *format, ...)
 	int s_add;
 
 	va_list myargs;
-	va_start(myargs, format); 
+
+	va_start(myargs, format);
 
 	for (it = 0; format[it] != '\0'; it++)
 	{
@@ -32,7 +33,7 @@ int _printf(const char *format, ...)
 			it++;
 			my_printf_return += (s_add - 1);
 		}
-		else if (format[it] == '%' && format[it + 1] == '%')
+		else if (format[it + 1] == '%')
 		{
 			my_putchar(format[it]);
 			it++;
