@@ -33,7 +33,7 @@ int _printf(const char *format, ...)
 			it++;
 			my_printf_return += (s_add - 1);
 		}
-		else if (firmat[it] == '%' && format[it + 1] == '%')
+		else if (format[it] == '%' && format[it + 1] == '%')
 		{
 			my_putchar(format[it]);
 			it++;
