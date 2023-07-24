@@ -38,9 +38,16 @@ int _printf(const char *format, ...)
 			my_putchar('%');
 			it++;
 		}
-		else if (format[it] == '%' && format[it + 1] != '%')
+		/*else if (format[it] == '%' && format[it + 1] != '%')
 		{
 			my_putchar('%');
+			continue;
+		}*/
+		else if (format[it] == '%' && (format[it + 1] == 'd' || format[it + 1] == 'i' ))
+		{
+			s_add = put_int(va_arg(myargs, int));
+			it++;
+			my_printf_return += s_add;
 		}
 		my_printf_return += 1;
 	}
