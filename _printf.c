@@ -1,43 +1,60 @@
 #include "main.h"
+
 /**
  * _printf - a function that produces output according to a format
  *
  * @format: format for the output
  *
- * Return: int
+ * Return: the number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int my_printf_return = 0;
-	unsigned int it;
-	int s_add;
+    int my_printf_return = 0;
+    va_list myargs;
+    char c;
+    char *s;
 
-	va_list myargs;
+    va_start(myargs, format);
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-	va_start(myargs, format);
+    for (; *format != '\0'; format++)
+    {
+        if (*format != '%')
+        {
+            my_putchar(*format);
+            my_printf_return++;
+        }
+        else
+        {
+            format++;
+            switch (*format)
+            {
+            case 'c':
+                c = va_arg(myargs, int);
+                my_putchar(c);
+                my_printf_return++;
+                break;
+            case 's':
+                s = va_arg(myargs, char *);
+                if (s)
+                {
+                    int len = dee_puts(s);
+                    my_printf_return += len;
+                }
+                break;
+            case '%':
+                my_putchar('%');
+                my_printf_return++;
+                break;
+            default:
+                my_putchar('%');
+                my_putchar(*format);
+                my_printf_return += 2;
+                break;
+            }
+        }
+    }
 
-	for (it = 0; format[it] != '\0'; it++)
-	{
-		if (format[it] != '%')
-		{
-			my_putchar(format[it]);
-		}
-		else if (format[it] == '%' && format[it + 1] == 'c')
-		{
-			my_putchar(va_arg(myargs, int));
-			it++;
-		}
-		else if (format[it] == '%' && format[it + 1] == 's')
-		{
-			s_add = dee_puts(va_arg(myargs, char *));
-			it++;
-			my_printf_return += (s_add - 1);
-		}
-		my_printf_return += 1;
-	}
-	va_end(myargs);
-	return (my_printf_return);
-
+    va_end(myargs);
+    return my_printf_return;
 }
+
