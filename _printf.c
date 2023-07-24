@@ -8,11 +8,12 @@
  */
 int _printf(const char *format, ...)
 {
-	int my_printf_return = 0;
+	int my_printf_return = 0, s_add;
 	unsigned int it;
-	int s_add;
 
 	va_list myargs;
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 
 	va_start(myargs, format);
 
