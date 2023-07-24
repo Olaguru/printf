@@ -8,11 +8,12 @@
  */
 int _printf(const char *format, ...)
 {
-	int my_printf_return = 0;
+	int my_printf_return = 0,/* s_add,*/ spi;
 	unsigned int it;
-	int s_add;
 
 	va_list myargs;
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 
 	va_start(myargs, format);
 
@@ -20,9 +21,10 @@ int _printf(const char *format, ...)
 	{
 		if (format[it] != '%')
 		{
-			my_putchar(format[it]);
+			my_printf_return = my_putchar(format[it]);
+			it++;
 		}
-		else if (format[it] == '%' && format[it + 1] == 'c')
+		/*else if (format[it] == '%' && format[it + 1] == 'c')
 		{
 			my_putchar(va_arg(myargs, int));
 			it++;
@@ -32,23 +34,22 @@ int _printf(const char *format, ...)
 			s_add = dee_puts(va_arg(myargs, char *));
 			it++;
 			my_printf_return += (s_add - 1);
-		}
+		}*/
 		else if (format[it + 1] == '%')
 		{
-			my_putchar('%');
-			it++;
+			my_printf_return = my_putchar('%');
+			continue;
 		}
-		else if (format[it] == '%' && (format[it + 1] == 'd' || format[it + 1] == 'i' ))
+		spi = spec_select(format[it], myargs);
+		if (spi == -1)
 		{
-			s_add = put_int(va_arg(myargs, int));
-			it++;
-			my_printf_return += s_add;
+			my_printf_return += my_putchar(format[it - 1]);
+			my_printf_return += my_putchar(format[it]);
 		}
-		else if (format[it] == '%' && format[it + 1] != '%')
+		else
 		{
-		       	my_putchar('%');
+			my_printf_return += spi;
 		}
-		my_printf_return += 1;
 	}
 	va_end(myargs);
 	return (my_printf_return);

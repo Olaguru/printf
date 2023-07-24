@@ -8,12 +8,11 @@
  */
 int _printf(const char *format, ...)
 {
-	int my_printf_return = 0, s_add;
+	int my_printf_return = 0;
 	unsigned int it;
+	int s_add;
 
 	va_list myargs;
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
 
 	va_start(myargs, format);
 
@@ -39,9 +38,15 @@ int _printf(const char *format, ...)
 			my_putchar('%');
 			it++;
 		}
+		else if (format[it] == '%' && (format[it + 1] == 'd' || format[it + 1] == 'i' ))
+		{
+			s_add = put_int(va_arg(myargs, int));
+			it++;
+			my_printf_return += s_add;
+		}
 		else if (format[it] == '%' && format[it + 1] != '%')
 		{
-			my_putchar('%');
+		       	my_putchar('%');
 		}
 		my_printf_return += 1;
 	}
