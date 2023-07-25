@@ -1,24 +1,45 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef MAIN_H
+#define MAIN_H
 
-#include <unistd.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
 /**
-* struct charfun - contains specifier and its corresponding func
-* @specifier: The specifier character
-* @ptr: the function pointer to the corresponding printing function
+ * struct char_func - structure for specifier and matching function
+ * @c: character
+ * @ptr: function pointer
 */
-typedef struct charfun
+typedef struct char_func
 {
-	char *specifier;
+	char *c;
 	int (*ptr)(va_list);
-} specfunc;
+} cf_t;
 
 int _printf(const char *format, ...);
-int my_putchar(char);
-int dee_puts(char *string);
-int put_int(int num);
+int match_spec(char, va_list);
+int _strlen(char *s);
 
-#endif /* _MAIN_H_ */
+
+/* in write_functions.c file */
+int print_int(va_list);
+int print_string(va_list);
+int print_char(va_list);
+int _putchar(char);
+int _puts(char *str);
+
+/* in specifiers.c file */
+int to_binary(va_list);
+int print_unsigned_int(va_list);
+int print_unsigned_oct(va_list);
+int print_adress(va_list);
+int hex_lower(va_list);
+int hex_UPPER(va_list);
+
+/* in functions.c */
+int print_hex(unsigned int, int);
+int print_address(va_list ptr);
+int np_characters(va_list str);
+int rot13(va_list);
+int reverse_string(va_list);
+
+#endif

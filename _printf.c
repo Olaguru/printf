@@ -1,49 +1,45 @@
 #include "main.h"
+
 /**
- * _printf - a function that produces output according to a format
+ * _printf - formats and prints data
  *
- * @format: format for the output
- *
- * Return: int
+ * @format: a character string
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int p_ret = 0, s_add;
-	unsigned int it;
-
-	va_list myargs;
+	int i = 0, char_count = 0, check;
+	va_list args;
 
 	if (!format || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
-	va_start(myargs, format);
 
-	for (it = 0; format[it] != '\0'; it++)
+	va_start(args, format);
+	for (; format[i] != '\0'; i++)
 	{
-		if (format[it] != '%')
+		/* for nomal characters */
+		if (format[i] != '%')
 		{
-			p_ret += my_putchar(format[it]);
+			char_count += _putchar(format[i]);
+			continue;
 		}
-		else if (format[it + 1] == '%')
+		/* for '%%' */
+		if (format[++i] == '%')
 		{
-			p_ret += my_putchar('%');
-			it++;
+			char_count += _putchar('%');
+			continue;
 		}
-		else if (format[it] == '%' && format[it + 1] == 'c')
+		/* checks for %[possible specifier] */
+		check = match_spec(format[i], args);
+		/* if no specifier is found */
+		if (check == -1)
 		{
-			p_ret += my_putchar(va_arg(myargs, int));
-			it++;
+			char_count += _putchar(format[i - 1]);/*prints %*/
+			char_count += _putchar(format[i]);/*then non-specifier character*/
 		}
-		else if (format[it] == '%' && format[it + 1] == 's')
-		{
-			s_add = dee_puts(va_arg(myargs, char *));
-			it++;
-			p_ret += (s_add);
-		}
-		else if (format[it] == '%' && (format[it + 1] != '%'))
-		{
-			p_ret += my_putchar('%');
-		}
+		else
+			char_count += check;
 	}
-	va_end(myargs);
-	return (p_ret);
+	va_end(args);
+	return (char_count);
 }
