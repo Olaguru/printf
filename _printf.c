@@ -14,24 +14,24 @@ int _printf(const char *format, ...)
 
 	va_list myargs;
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-	va_start(myargs, format);
+	/* if (!format || (format[0] == '%' && format[1] == '\0')) */
+		/* return (-1);*/
+	/*va_start(myargs, format);*/
 
 	for (it = 0; format[it] != '\0'; it++)
 	{
 		if (format[it] != '%')
 		{
-			p_ret += my_putchar(format[it]);
+			my_putchar(format[it]);
 		}
 		else if (format[it + 1] == '%')
 		{
-			p_ret += my_putchar('%');
+			my_putchar('%');
 			it++;
 		}
 		else if (format[it] == '%' && format[it + 1] == 'c')
 		{
-			p_ret += my_putchar(va_arg(myargs, int));
+			my_putchar(va_arg(myargs, int));
 			it++;
 		}
 		else if (format[it] == '%' && format[it + 1] == 's')
@@ -42,9 +42,9 @@ int _printf(const char *format, ...)
 		}
 		else if (format[it] == '%' && format[it + 1] != '%')
 		{
-			p_ret += my_putchar('%');
+			my_putchar('%');
 		}
-
+		p_ret += 1;
 	}
 	va_end(myargs);
 	return (p_ret);
