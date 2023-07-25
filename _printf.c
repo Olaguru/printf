@@ -21,28 +21,28 @@ int _printf(const char *format, ...)
 	{
 		if (format[it] != '%')
 		{
-			my_putchar(format[it]);
+			p_ret += my_putchar(format[it]);
 		}
 		else if (format[it + 1] == '%')
 		{
-			my_putchar('%');
+			p_ret += my_putchar('%');
+			it++;
 		}
 		else if (format[it] == '%' && format[it + 1] == 'c')
 		{
-			my_putchar(va_arg(myargs, int));
+			p_ret += my_putchar(va_arg(myargs, int));
 			it++;
 		}
 		else if (format[it] == '%' && format[it + 1] == 's')
 		{
 			s_add = dee_puts(va_arg(myargs, char *));
 			it++;
-			p_ret += (s_add - 1);
+			p_ret += (s_add);
 		}
 		else if (format[it] == '%' && format[it + 1] != '%')
 		{
-			my_putchar('%');
+			p_ret += my_putchar('%');
 		}
-		p_ret += 1;
 	}
 	va_end(myargs);
 	return (p_ret);
