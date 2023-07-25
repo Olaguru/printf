@@ -8,9 +8,8 @@
  */
 int _printf(const char *format, ...)
 {
-	int p_ret = 0;
+	int p_ret = 0, s_add;
 	unsigned int it;
-	int s_add;
 
 	va_list myargs;
 
@@ -48,5 +47,4 @@ int _printf(const char *format, ...)
 	}
 	va_end(myargs);
 	return (p_ret);
-
 }
