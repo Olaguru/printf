@@ -1,60 +1,51 @@
 #include "main.h"
 
 /**
- * _printf - a function that produces output according to a format
+ * _printf - formatted output conversion and print data.
+ * @format: input string.
  *
- * @format: format for the output
- *
- * Return: the number of characters printed
+ * Return: number of chars printed.
  */
 int _printf(const char *format, ...)
 {
-    int my_printf_return = 0;
-    va_list myargs;
-    char c;
-    char *s;
+	unsigned int i = 0, len = 0, ibuf = 0;
+	va_list arguments;
+	int (*function)(va_list, char *, unsigned int);
+	char *buffer;
 
-    va_start(myargs, format);
-
-    for (; *format != '\0'; format++)
-    {
-        if (*format != '%')
-        {
-            my_putchar(*format);
-            my_printf_return++;
-        }
-        else
-        {
-            format++;
-            switch (*format)
-            {
-            case 'c':
-                c = va_arg(myargs, int);
-                my_putchar(c);
-                my_printf_return++;
-                break;
-            case 's':
-                s = va_arg(myargs, char *);
-                if (s)
-                {
-                    int len = dee_puts(s);
-                    my_printf_return += len;
-                }
-                break;
-            case '%':
-                my_putchar('%');
-                my_printf_return++;
-                break;
-            default:
-                my_putchar('%');
-                my_putchar(*format);
-                my_printf_return += 2;
-                break;
-            }
-        }
-    }
-
-    va_end(myargs);
-    return my_printf_return;
+	va_start(arguments, format), buffer = malloc(sizeof(char) * 1024);
+	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
+		return (-1);
+	if (!format[i])
+		return (0);
+	for (i = 0; format && format[i]; i++)
+	{
+		if (format[i] == '%')
+		{
+			if (format[i + 1] == '\0')
+			{	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
+				return (-1);
+			}
+			else
+			{	function = get_print_func(format, i + 1);
+				if (function == NULL)
+				{
+					if (format[i + 1] == ' ' && !format[i + 2])
+						return (-1);
+					handl_buf(buffer, format[i], ibuf), len++, i--;
+				}
+				else
+				{
+					len += function(arguments, buffer, ibuf);
+					i += ev_print_func(format, i + 1);
+				}
+			} i++;
+		}
+		else
+			handl_buf(buffer, format[i], ibuf), len++;
+		for (ibuf = len; ibuf > 1024; ibuf -= 1024)
+			;
+	}
+	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
+	return (len);
 }
-
