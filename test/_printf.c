@@ -8,7 +8,7 @@
  */
 int _printf(const char *format, ...)
 {
-	int p_ret = 0;
+	int my_printf_return = 0;
 	unsigned int it;
 	int s_add;
 
@@ -22,31 +22,23 @@ int _printf(const char *format, ...)
 	{
 		if (format[it] != '%')
 		{
-			p_ret += my_putchar(format[it]);
+			my_putchar(format[it]);
 		}
-		else if (format[it + 1] == '%')
-		{
-			p_ret += my_putchar('%');
-			it++;
-		}
+		else if (format[it] == '%' )
 		else if (format[it] == '%' && format[it + 1] == 'c')
 		{
-			p_ret += my_putchar(va_arg(myargs, int));
+			my_putchar(va_arg(myargs, int));
 			it++;
 		}
 		else if (format[it] == '%' && format[it + 1] == 's')
 		{
 			s_add = dee_puts(va_arg(myargs, char *));
 			it++;
-			p_ret += (s_add - 1);
+			my_printf_return += (s_add - 1);
 		}
-		else if (format[it] == '%' && format[it + 1] != '%')
-		{
-			p_ret += my_putchar('%');
-		}
-
+		my_printf_return += 1;
 	}
 	va_end(myargs);
-	return (p_ret);
+	return (my_printf_return);
 
 }
