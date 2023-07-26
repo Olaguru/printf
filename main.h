@@ -2,6 +2,8 @@
 #define _MAIN_H_
 
 #include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int _strlen(const char *);
 int print(char *);
