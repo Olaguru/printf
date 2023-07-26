@@ -32,10 +32,10 @@ int _printf(const char *format, ...)
 			pret = (count - 1);
 			ij++;
 		}
-		/*else if (format[ij] == '%' && (format[ij + 1] != '%'))*/
-		/*{*/
-		/*	my_putchar('%');*/
-		/*}*/
+		else if (format[ij] == '%' && (format[ij + 1] == '%'))
+		{
+			my_putchar('%');
+		}
 		pret += 1;
 	}
 	va_end(args);
