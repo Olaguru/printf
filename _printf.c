@@ -22,10 +22,10 @@ int _printf(const char *format, ...)
 	}
 
 	va_start(args, format);
-	size = handler(format, args);
+	big_size = handler(format, args);
 
 	myputchar(-1);
 	va_end(args);
 
-	return (size);
+	return (big_size);
 }
