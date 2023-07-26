@@ -7,7 +7,7 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int pret = 0, ij, count;
+	unsigned int pret = 0, ij, count, di_count = 0;
 
 	va_list args;
 
@@ -36,6 +36,12 @@ int _printf(const char *format, ...)
 		{
 			my_putchar('%');
 			ij++;
+		}
+		else if (format[ij + 1] == 'd' || format[ij + 1] == 'i')
+		{
+			di_count += _putint(va_arg(args, int));
+			ij++;
+			pret += (di_count - 1);
 		}
 		else
 		{
