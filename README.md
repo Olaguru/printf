@@ -1,2 +1,3 @@
-A printf project by Oladapo Odedeyi
-and :____Enter____Name___here___
+OLADAPO PROJECT
+WITH PARTNER 2
+0x11. C - printf
