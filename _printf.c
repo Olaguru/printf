@@ -29,7 +29,7 @@ int _printf(const char *format, ...)
 		else if (format[ij] == '%' && format[ij + 1] == 's')
 		{
 			count = dee_puts(va_arg(args, char *));
-			pret += (count + 1);
+			pret += (count - 1);
 			ij++;
 		}
 		else if (format[ij] == '%' && (format[ij + 1] == '%'))
@@ -37,7 +37,7 @@ int _printf(const char *format, ...)
 			my_putchar('%');
 			ij++;
 		}
-		else if (format[ij] == '%' && format[ij + 1] != '%')
+		else
 		{
 			my_putchar('%');
 		}
